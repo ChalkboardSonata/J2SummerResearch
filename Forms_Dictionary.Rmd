@@ -1,0 +1,27 @@
+---
+title: "ExampleForms"
+author: "Wells"
+date: "7/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(readr)
+library(dict)
+```
+
+
+```{r}
+# Import csv's as a dict
+forms<-dict()
+for (i in 0:495){
+  name<-paste( "Form_Data/",toString(i),"forms0.csv" , sep = "")
+  if (file.exists(name)==TRUE){
+    forms[[i]]<-read_csv(name,col_names = FALSE)
+  }
+}
+```
+
