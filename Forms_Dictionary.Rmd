@@ -62,3 +62,12 @@ forms_invert<-forms %>% count(rank, invertible) %>% group_by(rank) %>% mutate(pr
    geom_point()
 
 ```
+
+```{r}
+forms_stable<-forms %>% count(rank, stable) %>% group_by(rank) %>% mutate(prop = n/ sum(n))
+
+ forms_stable %>% filter(stable =="True") %>% 
+   ggplot(aes( x = rank, y = prop)) +
+   geom_point()
+
+```
