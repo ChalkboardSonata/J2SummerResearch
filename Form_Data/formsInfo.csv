@@ -1,0 +1,4 @@
+Read me on the forms database
+The labels for the columns are as follows: 0. vectorform 1. form hash 2. inverse hash 3. double inverse hash 4. rank  5. pfaffian 6. difference in rank between inverse and form 7. pseudo inverses taken until stable (-1 if unstable) 8. tries at stabilizing so far
+backupCSV,forms0.csv
+The inverse hash is 0 if the inverse is not generated
