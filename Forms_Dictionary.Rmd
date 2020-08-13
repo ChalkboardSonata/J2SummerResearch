@@ -41,18 +41,32 @@ forms<-files %>% map_dfr(read_csv, col_names = F, col_types = cols(.default = "c
 #Rename columns
 forms <- as_tibble(forms)
 
-forms<-rename(forms, form = X1, invertible = X2, inverse = X3, dinverse = X4, rank = X5,rank_diff = X6, PF = X7, stable = X8)
+forms<-rename(forms, form = X1, hash = X2, inverse = X3, dinverse = X4, rank = X5, PF = X6, rank_diff = X7, stablity = X8, tries = X9)
 
 ```
 
 ```{r}
 #Treat rank and pfaffian as numbers
-forms<- forms %>% mutate(rank = as.numeric(rank), PF = map_dbl(PF, ~eval(parse(text = .x))))
+forms<- forms %>% mutate(rank = as.numeric(rank), PF = map_dbl(PF, ~eval(parse(text = .x))), stablity = as.numeric(stablity), tries = as.numeric(tries),  rank_diff = as.numeric(rank_diff))
 
 ```
 
 ```{r}
-forms %>% ggplot(aes(x = rank))+geom_histogram(binwidth = 5)
+ori_forms <- forms  %>% filter(tries == 0)
+   
+#ggplot(aes(x = rank))+geom_histogram(binwidth = 5)
+```
+
+```{r}
+ori_forms %>% count(rank, stablity) %>% group_by(rank) %>% mutate(prop = n/ sum(n)) %>% filter(stablity == 0) %>% mutate(prop = 1-prop) %>% ggplot(aes( x = rank, y = prop)) +
+   geom_point() +
+   theme_bw()
+```
+```{r}
+ori_forms %>% count(rank, stablity) %>% group_by(rank) %>% mutate(prop = n/ sum(n)) %>% filter(stablity == -1) %>% mutate(prop = 1-prop) %>% ggplot(aes( x = rank, y = prop)) +
+   geom_point() +
+   geom_smooth() +
+   theme_bw()
 ```
 
 ```{r}
